@@ -1,0 +1,41 @@
+﻿@model IEnumerable<BookShop.Models.CoverType>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<partial name="_Notification"/>
+<div class="row mb-3">
+   
+    <h1>Cover Type</h1>
+
+    <div class="">
+        <a class="btn btn-sm btn-success px-4" asp-action="Create">Create New</a>
+    </div>
+</div>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+         
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+            
+                <td>
+                    <a class="btn btn-sm btn-primary mx-3" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+
+                    <a class="btn btn-sm btn-danger mx-3" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
