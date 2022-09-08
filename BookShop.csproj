@@ -17,22 +17,29 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\CoverTypes\Create.cshtml">
+    <Content Update="Areas\Admin\Views\CoverTypes\Create.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\CoverTypes\Delete.cshtml">
+    <Content Update="Areas\Admin\Views\CoverTypes\Delete.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\CoverTypes\Edit.cshtml">
+    <Content Update="Areas\Admin\Views\CoverTypes\Edit.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\CoverTypes\Index.cshtml">
+    <Content Update="Areas\Admin\Views\CoverTypes\Index.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Customers\Data\" />
+    <Folder Include="Areas\Customers\Models\" />
   </ItemGroup>
 
 </Project>

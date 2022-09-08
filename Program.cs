@@ -11,6 +11,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+// Add unitOfWork
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
@@ -41,10 +42,18 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+/*app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:Customers}/{controller=Home}/{action=Index}/{id?}"
+    );
+});*/
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    name: "Default",
+    pattern: "{area=Customers}/{controller=Home}/{action=Index}/{id?}");
+
 app.MapRazorPages();
 
 app.Run();

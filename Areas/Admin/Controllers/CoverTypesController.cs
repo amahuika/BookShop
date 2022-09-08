@@ -3,8 +3,9 @@ using BookShop.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookShop.Controllers
+namespace BookShop.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CoverTypesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -25,22 +26,22 @@ namespace BookShop.Controllers
         }
 
         // GET: Categories/Details/5
-/*        public IActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        /*        public IActionResult Details(int? id)
+                {
+                    if (id == null)
+                    {
+                        return NotFound();
+                    }
 
-            var coverType = _unitOfWork
-                .CoverType.GetFirstOrDefault(m => m.Id == id);
-            if (coverType == null)
-            {
-                return NotFound();
-            }
+                    var coverType = _unitOfWork
+                        .CoverType.GetFirstOrDefault(m => m.Id == id);
+                    if (coverType == null)
+                    {
+                        return NotFound();
+                    }
 
-            return View(coverType);
-        }*/
+                    return View(coverType);
+                }*/
 
         // GET: Categories/Create
         public IActionResult Create()

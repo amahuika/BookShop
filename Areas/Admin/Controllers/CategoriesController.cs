@@ -9,8 +9,9 @@ using BookShop.Data;
 using BookShop.Models;
 using BookShop.Data.Repository.IRepository;
 
-namespace BookShop.Controllers
+namespace BookShop.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoriesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -21,32 +22,32 @@ namespace BookShop.Controllers
         }
 
         // GET: Categories
-        public  IActionResult Index()
+        public IActionResult Index()
         {
             IEnumerable<Category> ObjCategoriesList = _unitOfWork.Category.GetAll();
             return View(ObjCategoriesList);
-         /*     return _context.Category != null ? 
-                          View(await _context.Category.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Category'  is null.");*/
+            /*     return _context.Category != null ? 
+                             View(await _context.Category.ToListAsync()) :
+                             Problem("Entity set 'ApplicationDbContext.Category'  is null.");*/
         }
 
         // GET: Categories/Details/5
-    /*    public IActionResult Details(int? id)
-        {
-            if (id == null)
+        /*    public IActionResult Details(int? id)
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var category = _unitOfWork
-                .Category.GetFirstOrDefault(m => m.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
+                var category = _unitOfWork
+                    .Category.GetFirstOrDefault(m => m.Id == id);
+                if (category == null)
+                {
+                    return NotFound();
+                }
 
-            return View(category);
-        }*/
+                return View(category);
+            }*/
 
         // GET: Categories/Create
         public IActionResult Create()
@@ -75,7 +76,7 @@ namespace BookShop.Controllers
         // GET: Categories/Edit/5
         public IActionResult Edit(int? id)
         {
-            if (id == null )
+            if (id == null)
             {
                 return NotFound();
             }
@@ -102,9 +103,9 @@ namespace BookShop.Controllers
 
             if (ModelState.IsValid)
             {
-               
-                    _unitOfWork.Category.Update(category);
-                    _unitOfWork.Save();
+
+                _unitOfWork.Category.Update(category);
+                _unitOfWork.Save();
                 TempData["success"] = "Category updated successfully";
 
                 return RedirectToAction(nameof(Index));
@@ -144,15 +145,15 @@ namespace BookShop.Controllers
             {
                 _unitOfWork.Category.Remove(category);
             }
-            
-             _unitOfWork.Save();
+
+            _unitOfWork.Save();
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction(nameof(Index));
         }
 
-      /*  private bool CategoryExists(int id)
-        {
-          return (_context.Category?.Any(e => e.Id == id)).GetValueOrDefault();
-        }*/
+        /*  private bool CategoryExists(int id)
+          {
+            return (_context.Category?.Any(e => e.Id == id)).GetValueOrDefault();
+          }*/
     }
 }
