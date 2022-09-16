@@ -16,6 +16,7 @@ namespace BookShop.Models
         [Required]
         public int DisplayOrder { get; set; }
 
+        [Display(Name = "Date Created")]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
 
