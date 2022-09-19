@@ -1,8 +1,8 @@
 ﻿using BookShop.Data.Repository.IRepository;
 using BookShop.Models;
+using BookShop.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace BookShop.Areas.Admin.Controllers
 {
@@ -26,7 +26,7 @@ namespace BookShop.Areas.Admin.Controllers
                              Problem("Entity set 'ApplicationDbContext.Category'  is null.");*/
         }
 
-      
+
 
         // GET: Categories/Create
         public IActionResult Create()
@@ -55,31 +55,46 @@ namespace BookShop.Areas.Admin.Controllers
         // GET: Categories/Edit/5
         public IActionResult Upsert(int? id)
         {
-            Product product = new();
-            /* Get drop down list Using View Data */
-            ViewData["CategoryList"] = new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name");
+            /* from a view model*/
+            ProductVM productVM = new ProductVM
+            {
+                product = new Product(),
 
-                 /* get drop down Using projections with Select*/
-           IEnumerable<SelectListItem> CoverTypeList = _unitOfWork.CoverType.GetAll().Select(
-                u => new SelectListItem
+                CategoryList = new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name"),
+
+                CoverTypeList = _unitOfWork.CoverType.GetAll().Select(i => new SelectListItem
                 {
-                    Text = u.Name,
-                    Value = u.Id.ToString()
-                });
+                    Value = i.Id.ToString(),
+                    Text = i.Name,
+                })
+            };
 
+
+            /*    Product product = new();
+                *//* Get drop down list Using View Data *//*
+                ViewData["CategoryList"] = new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name");*/
+
+            /* get drop down Using projections with Select*/
+            /*  IEnumerable<SelectListItem> CoverTypeList = _unitOfWork.CoverType.GetAll().Select(
+                   u => new SelectListItem
+                   {
+                       Text = u.Name,
+                       Value = u.Id.ToString()
+                   });
+  */
             if (id == null || id == 0)
             {// create the product
 
-                ViewBag.CoverType = CoverTypeList;
-                    ;
-                return View(product);
+                /*ViewBag.CoverType = CoverTypeList;*/
+                ;
+                return View(productVM);
             }
             else
             {
 
             }
 
-       
+
             return View();
         }
 
@@ -88,23 +103,20 @@ namespace BookShop.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(int id, [Bind("Id,Name")] CoverType coverType)
+        public IActionResult Upsert(ProductVM obj, IFormFile file)
         {
-            if (id != coverType.Id)
-            {
-                return NotFound();
-            }
+
 
             if (ModelState.IsValid)
             {
 
-                _unitOfWork.CoverType.Update(coverType);
+                //  _unitOfWork.CoverType.Update(coverType);
                 _unitOfWork.Save();
                 TempData["success"] = "Cover updated successfully";
 
                 return RedirectToAction(nameof(Index));
             }
-            return View(coverType);
+            return View();
         }
 
         // GET: Categories/Delete/5
