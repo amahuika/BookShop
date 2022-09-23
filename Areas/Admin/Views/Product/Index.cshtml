@@ -5,10 +5,10 @@
     <h1>Product List</h1>
 
     <div class="">
-        <a  asp-controller="Product" class="btn btn-sm btn-success px-4" asp-action="Upsert">Create New Product</a>
+        <a asp-controller="Product" class="btn btn-sm btn-success px-4" asp-action="Upsert">Create New Product</a>
     </div>
 </div>
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped" id="dataTable">
     <thead>
         <tr>
             <th>
@@ -20,15 +20,19 @@
             <th>
                 Price
             </th>
-            <th>
-                Author
-            </th>
-            <th>
-                Category
-            </th>
+                  <th>
+                    Author
+                </th>
+                <th>
+                    Category
+                </th>
 
-            <th></th>
+           @*     <th></th>*@
         </tr>
     </thead>
-  
+
 </table>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script src="~/js/product.js"></script>

@@ -10,10 +10,13 @@ namespace BookShop.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IWebHostEnvironment _webHostEnviroment;
 
-        public ProductController(IUnitOfWork unitOfWork)
+
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnviroment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnviroment = webHostEnviroment;
         }
 
         // GET: Categories
@@ -58,7 +61,7 @@ namespace BookShop.Areas.Admin.Controllers
             /* from a view model*/
             ProductVM productVM = new ProductVM
             {
-                product = new Product(),
+                Product = new Product(),
 
                 CategoryList = new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name"),
 
@@ -103,16 +106,44 @@ namespace BookShop.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        // have to add iformfile to capture an upload
         public IActionResult Upsert(ProductVM obj, IFormFile file)
         {
 
 
             if (ModelState.IsValid)
             {
+                // gets the path to the wwwRoot
+                string rootPath = _webHostEnviroment.WebRootPath;
 
-                //  _unitOfWork.CoverType.Update(coverType);
+                if(file != null) 
+                {
+                    // creates unique name for file
+                    string fileName = Guid.NewGuid().ToString();
+
+                    // Combines the wwwRoot path with the folders location
+                    var uploads = Path.Combine(rootPath, @"Images\Products");
+
+                    // Gets the file extension from the file passed into upsert
+                    var extension = Path.GetExtension(file.FileName);
+
+                    // Createing a new file stream to manipulate files. combine the paths then create a new file
+                    var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create);
+
+                    // using statement copys the uploaded file to the target stream
+                    using (fileStream)
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    // Add the path to the image to the database
+                    obj.Product.ImageUrl = @"\Images\Products\" + fileName + extension;
+                
+                }
+
+                _unitOfWork.Product.Add(obj.Product);
                 _unitOfWork.Save();
-                TempData["success"] = "Cover updated successfully";
+                TempData["success"] = "New Product Added Successfully";
 
                 return RedirectToAction(nameof(Index));
             }
@@ -161,6 +192,21 @@ namespace BookShop.Areas.Admin.Controllers
           {
             return (_context.Category?.Any(e => e.Id == id)).GetValueOrDefault();
           }*/
+
+
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var productList = _unitOfWork.Product.GetAll();
+
+            return Json(new {data = productList});
+
+        }
+
+        #endregion
+
     }
 }
 

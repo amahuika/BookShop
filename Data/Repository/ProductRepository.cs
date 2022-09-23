@@ -14,7 +14,7 @@ namespace BookShop.Data.Repository
             _db = db;
         }
 
-
+     
         public void Update(Product obj)
         {
             var objFromDb = _db.Product.FirstOrDefault(x => x.Id == obj.Id);
