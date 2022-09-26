@@ -94,11 +94,14 @@ namespace BookShop.Areas.Admin.Controllers
             }
             else
             {
+                productVM.Product = _unitOfWork.Product.GetFirstOrDefault(u => u.Id == id);
+
+                return View(productVM);
 
             }
 
 
-            return View();
+         
         }
 
         // POST: Categories/Edit/5
@@ -107,7 +110,7 @@ namespace BookShop.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         // have to add iformfile to capture an upload
-        public IActionResult Upsert(ProductVM obj, IFormFile file)
+        public IActionResult Upsert(ProductVM obj, IFormFile? file)
         {
 
 
@@ -127,6 +130,18 @@ namespace BookShop.Areas.Admin.Controllers
                     // Gets the file extension from the file passed into upsert
                     var extension = Path.GetExtension(file.FileName);
 
+                    // Delete old file if it exsits
+                    if (obj.Product.ImageUrl != null)
+                    {
+                        // removes backslash from path 
+                        var oldImagePath = Path.Combine(rootPath,obj.Product.ImageUrl.TrimStart('\\'));
+
+                        if(System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+
+                    }
                     // Createing a new file stream to manipulate files. combine the paths then create a new file
                     var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create);
 
@@ -141,9 +156,23 @@ namespace BookShop.Areas.Admin.Controllers
                 
                 }
 
-                _unitOfWork.Product.Add(obj.Product);
+                if(obj.Product.Id == 0)
+                {
+                    _unitOfWork.Product.Add(obj.Product);
+                    TempData["success"] = "New Product Added Successfully";
+
+                }
+                else
+                {
+                    _unitOfWork.Product.Update(obj.Product);
+                    TempData["success"] = "Product Updated Successfully";
+
+                }
                 _unitOfWork.Save();
-                TempData["success"] = "New Product Added Successfully";
+
+               
+                
+                
 
                 return RedirectToAction(nameof(Index));
             }
@@ -169,7 +198,7 @@ namespace BookShop.Areas.Admin.Controllers
         }
 
         // POST: Categories/Delete/5
-        [HttpPost, ActionName("Delete")]
+/*        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
@@ -177,16 +206,29 @@ namespace BookShop.Areas.Admin.Controllers
             {
                 return Problem("Entity set 'Cover'  is null.");
             }
-            var coverType = _unitOfWork.CoverType.GetFirstOrDefault(u => u.Id == id);
-            if (coverType != null)
+            var product = _unitOfWork.Product.GetFirstOrDefault(u => u.Id == id);
+            if (product != null)
             {
-                _unitOfWork.CoverType.Remove(coverType);
+                if (product.ImageUrl != null)
+                {
+
+                    var rootPath = _webHostEnviroment.WebRootPath;
+                    // removes backslash from path 
+                    var oldImagePath = Path.Combine(rootPath, product.ImageUrl.TrimStart('\\'));
+
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+
+                }
+                _unitOfWork.Product.Remove(product);
             }
 
             _unitOfWork.Save();
             TempData["success"] = "Cover deleted successfully";
             return RedirectToAction(nameof(Index));
-        }
+        }*/
 
         /*  private bool CategoryExists(int id)
           {
@@ -196,14 +238,49 @@ namespace BookShop.Areas.Admin.Controllers
 
 
         #region API CALLS
+        
         [HttpGet]
         public IActionResult GetAll()
         {
-            var productList = _unitOfWork.Product.GetAll();
+            var productList = _unitOfWork.Product.GetAll("Category,CoverType");
 
             return Json(new {data = productList});
 
         }
+
+        // POST: Categories/Delete/5
+        [HttpDelete]
+        public IActionResult DeleteConfirmed(int? id)
+        {
+          
+            var product = _unitOfWork.Product.GetFirstOrDefault(u => u.Id == id);
+
+            if (product != null)
+            {
+                if (product.ImageUrl != null)
+                { 
+
+                    var rootPath = _webHostEnviroment.WebRootPath;
+                    // removes backslash from path 
+                    var oldImagePath = Path.Combine(rootPath, product.ImageUrl.TrimStart('\\'));
+
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+
+                }
+                _unitOfWork.Product.Remove(product);
+            } else
+            {
+                return Json(new {success = false, message = "Error while deleting"});
+            }
+
+            _unitOfWork.Save();
+           
+            return Json(new {success = true, message = "Product deleted successfully"});
+        }
+
 
         #endregion
 

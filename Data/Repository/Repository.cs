@@ -13,6 +13,7 @@ namespace BookShop.Data.Repository
         public Repository(ApplicationDbContext db)
         {
             _db = db;
+            //_db.Product.Include(u => u.Category);
             this.DbSet = _db.Set<T>();
         }
 
@@ -24,17 +25,35 @@ namespace BookShop.Data.Repository
 
         }
 
-        public IEnumerable<T> GetAll()
+        // include properties - "Category,CoverType"
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = DbSet;
+            if (includeProperties != null)
+            {
+                foreach (var prop in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+
+                    query = query.Include(prop);
+                }
+            }
             return query.ToList();
         }
 
-        public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
+        public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             IQueryable<T> query = DbSet;
 
             query = query.Where(filter);
+
+            if (includeProperties != null)
+            {
+                foreach (var prop in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+
+                    query = query.Include(prop);
+                }
+            }
 
             return query.FirstOrDefault();
         }

@@ -7,77 +7,88 @@
 <hr />
 <div class="row">
    
-        <form asp-action="Upsert" enctype="multipart/form-data">
+    <form asp-action="Upsert" enctype="multipart/form-data">
+        <input asp-for="Product.Id" hidden />
+        <input asp-for="Product.ImageUrl" hidden />
+        <div class="row">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Product.Title" class="control-label"></label>
-                <input asp-for="Product.Title" class="form-control" />
-                <span asp-validation-for="Product.Title" class="text-danger"></span>
-            </div>
-            <div class="form-group my-2">
-                <label asp-for="Product.Description" class="control-label"></label>
-                <textarea asp-for="Product.Description" rows="3" class="form-control form-text"></textarea>
-                <span asp-validation-for="Product.Description" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="form-group my-2 col-6">
-                    <label asp-for="Product.ISBN" class="control-label"></label>
-                    <input asp-for="Product.ISBN" class="form-control" />
-                    <span asp-validation-for="Product.ISBN" class="text-danger"></span>
-                </div>
-                <div class="form-group my-2 col-6">
-                    <label asp-for="Product.Author" class="control-label"></label>
-                    <input asp-for="Product.Author" class="form-control" />
-                    <span asp-validation-for="Product.Author" class="text-danger"></span>
-                </div>
-                <div class="form-group my-2 col-6">
-                    <label asp-for="Product.ListPrice" class="control-label"></label>
-                    <input asp-for="Product.ListPrice" class="form-control" />
-                    <span asp-validation-for="Product.ListPrice" class="text-danger"></span>
-                </div>
-                <div class="form-group my-2 col-6">
-                    <label asp-for="Product.Price" class="control-label"></label>
-                    <input asp-for="Product.Price" class="form-control" />
-                    <span asp-validation-for="Product.Price" class="text-danger"></span>
-                </div>
-                <div class="form-group my-2 col-6">
-                    <label asp-for="Product.Price50" class="control-label"></label>
-                    <input asp-for="Product.Price50" class="form-control" />
-                    <span asp-validation-for="Product.Price50" class="text-danger"></span>
-                </div>
-                <div class="form-group my-2 col-6">
-                    <label asp-for="Product.Price100" class="control-label"></label>
-                    <input asp-for="Product.Price100" class="form-control" />
-                    <span asp-validation-for="Product.Price100" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group my-2 ">
-                <label asp-for="Product.ImageUrl" class="control-label"></label>
-                <input id="uploadBox" type="file" name="file" class="form-control" />
-             
-            </div>
-            <div class="row">
-                <div class="form-group my-2 col-6">
-                    <label asp-for="Product.CategoryId" class="control-label"></label>
-                    <Select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-control form-select">
-                        <option selected disabled> Select a category</option>
-                    </Select>
-                    <span asp-validation-for="Product.Category" class="text-danger"></span>
-                </div>
-                <div class="form-group my-2 col-6">
-                    <label asp-for="Product.CoverTypeId" class="control-label"></label>
-                    <Select asp-for="Product.CoverTypeId" asp-items="@Model.CoverTypeList" class="form-control form-select">
-                        <option selected disabled> Select a cover type</option>
-                    </Select>
-                    <span asp-validation-for="Product.CoverType" class="text-danger"></span>
-                </div>
-            </div>
 
-      
+            <div class="col-10">
+                <div class="form-group ">
+                    <label asp-for="Product.Title" class="control-label"></label>
+                    <input asp-for="Product.Title" class="form-control" />
+                    <span asp-validation-for="Product.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group my-2 ">
+                    <label asp-for="Product.Description" class="control-label"></label>
+                    <textarea asp-for="Product.Description" rows="2" class="form-control form-text"></textarea>
+                    <span asp-validation-for="Product.Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-2 ">
+
+                <img src="@Model.Product.ImageUrl" width="100%" />
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="form-group my-2 col-6">
+                <label asp-for="Product.ISBN" class="control-label"></label>
+                <input asp-for="Product.ISBN" class="form-control" />
+                <span asp-validation-for="Product.ISBN" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2 col-6">
+                <label asp-for="Product.Author" class="control-label"></label>
+                <input asp-for="Product.Author" class="form-control" />
+                <span asp-validation-for="Product.Author" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2 col-6">
+                <label asp-for="Product.ListPrice" class="control-label"></label>
+                <input asp-for="Product.ListPrice" class="form-control" />
+                <span asp-validation-for="Product.ListPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2 col-6">
+                <label asp-for="Product.Price" class="control-label"></label>
+                <input asp-for="Product.Price" class="form-control" />
+                <span asp-validation-for="Product.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2 col-6">
+                <label asp-for="Product.Price50" class="control-label"></label>
+                <input asp-for="Product.Price50" class="form-control" />
+                <span asp-validation-for="Product.Price50" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2 col-6">
+                <label asp-for="Product.Price100" class="control-label"></label>
+                <input asp-for="Product.Price100" class="form-control" />
+                <span asp-validation-for="Product.Price100" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group my-2 ">
+            <label asp-for="Product.ImageUrl" class="control-label"></label>
+            <input id="uploadBox" type="file" name="file" class="form-control" />
+
+        </div>
+        <div class="row">
+            <div class="form-group my-2 col-6">
+                <label asp-for="Product.CategoryId" class="control-label"></label>
+                <Select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-control form-select">
+                    <option selected disabled> Select a category</option>
+                </Select>
+                <span asp-validation-for="Product.Category" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2 col-6">
+                <label asp-for="Product.CoverTypeId" class="control-label"></label>
+                <Select asp-for="Product.CoverTypeId" asp-items="@Model.CoverTypeList" class="form-control form-select">
+                    <option selected disabled> Select a cover type</option>
+                </Select>
+                <span asp-validation-for="Product.CoverType" class="text-danger"></span>
+            </div>
+        </div>
+
+
         <div class="form-group mt-3">
             @if (Model.Product.Id != 0)
             {
-
 
                 <input type="submit" value="Update" class="btn btn-primary me-3 px-5" />
             }
@@ -89,7 +100,7 @@
             <a class="btn btn-dark px-5" asp-controller="Product" asp-action="Index">Back to List</a>
 
         </div>
-        </form>
+    </form>
     
 </div>
 
@@ -102,6 +113,13 @@
 
 
 <script type="text/javascript">
+
+    tinymce.init({
+        selector: 'textarea',
+        plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
+        toolbar_mode: 'floating',
+    });
+
     function ValidateInput() {
         if (document.getElementById("uploadBox").value == "") {
 
