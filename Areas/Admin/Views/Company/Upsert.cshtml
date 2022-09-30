@@ -1,0 +1,83 @@
+﻿@model BookShop.Models.Company
+
+@{
+    ViewData["Title"] = "Upsert";
+}
+<h1>@(Model.Id != 0 ? "Edit" : "Create") Company</h1>
+<hr />
+<div class="row">
+   
+    <form asp-action="Upsert" enctype="multipart/form-data">
+        <input asp-for="Id" hidden />
+      
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="col-10">
+                <div class="form-group ">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group my-2 ">
+                    <label asp-for="StreetAddress" class="control-label"></label>
+                    <input asp-for="StreetAddress"  class="form-control"></input>
+                    <span asp-validation-for="StreetAddress" class="text-danger"></span>
+                </div>
+            </div>
+          
+        </div>
+        
+        <div class="row">
+            <div class="form-group my-2 col-6">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2 col-6">
+                <label asp-for="PostalCode" class="control-label"></label>
+                <input asp-for="PostalCode" class="form-control" />
+                <span asp-validation-for="PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2 col-6">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+         
+        </div>
+    
+      
+  
+
+
+        <div class="form-group mt-3">
+            @if (Model.Id != 0)
+            {
+
+                <input type="submit" value="Update" class="btn btn-primary me-3 px-5" />
+            }
+            else
+            {
+                <input type="submit" onclick="return ValidateInput()" value="Create" class="btn btn-primary me-3 px-5" />
+            }
+
+            <a class="btn btn-dark px-5" asp-controller="Company" asp-action="Index">Back to List</a>
+
+        </div>
+    </form>
+    
+</div>
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+
+
+
+}

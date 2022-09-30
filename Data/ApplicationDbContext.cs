@@ -13,6 +13,11 @@ namespace BookShop.Data
         public DbSet<BookShop.Models.Category>? Category { get; set; }
         public DbSet<BookShop.Models.CoverType>? CoverType { get; set; }
         public DbSet<BookShop.Models.Product>? Product { get; set; }
+        public DbSet<BookShop.Models.ApplicationUser>? ApplicationUsers { get; set; }
+
+        public DbSet<BookShop.Models.Company>? Company { get; set; }
+
+
 
     }
 }

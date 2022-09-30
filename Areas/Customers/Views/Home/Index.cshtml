@@ -15,10 +15,10 @@
                             <p class="text-info">by @item.Author</p>
                         </div>
                         <div class="">
-                            <p class="card-title m-0">Price: <b>$@item.ListPrice.ToString("0.00")</b></p>
+                            <p class="card-title m-0">List Price: <strike><b>@item.ListPrice.ToString("c")</b></strike> </p>
                         </div>
                         <div class="mb-3">
-                            <p class="card-title m-0">Low as: <b>$@item.Price100.ToString("0.00")</b></p>
+                            <p class="card-title m-0">Our Price: <b>@item.Price100.ToString("c")</b></p>
                         </div>
                    
                         <a asp-action="details" asp-route-id="@item.Id" class="btn btn-primary px-4">Details</a>

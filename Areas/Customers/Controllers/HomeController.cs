@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace BookShop.Areas.Customers.Controllers
 {
-   [Area("Customers")]
+    [Area("Customers")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -36,5 +36,22 @@ namespace BookShop.Areas.Customers.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult Details(int id)
+        {
+
+            ShoppingCart cartObj = new ShoppingCart
+            {
+                Count = 1,
+                Product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id, "Category,CoverType"),
+               
+            };
+         
+           
+
+            return View(cartObj);
+        }
+
+
     }
 }
