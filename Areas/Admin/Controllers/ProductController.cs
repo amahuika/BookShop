@@ -242,7 +242,7 @@ namespace BookShop.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var productList = _unitOfWork.Product.GetAll("Category,CoverType");
+            var productList = _unitOfWork.Product.GetAll(null,"Category,CoverType");
 
             return Json(new {data = productList});
 

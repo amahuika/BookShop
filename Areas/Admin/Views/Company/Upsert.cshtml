@@ -13,18 +13,18 @@
         <div class="row">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="col-10">
-                <div class="form-group ">
+            
+                <div class="form-group col-6">
                     <label asp-for="Name" class="control-label"></label>
                     <input asp-for="Name" class="form-control" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-                <div class="form-group my-2 ">
+                <div class="form-group col-6">
                     <label asp-for="StreetAddress" class="control-label"></label>
                     <input asp-for="StreetAddress"  class="form-control"></input>
                     <span asp-validation-for="StreetAddress" class="text-danger"></span>
                 </div>
-            </div>
+           
           
         </div>
         

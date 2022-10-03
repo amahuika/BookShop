@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<BookShop.Models.Product>
 
+<partial name="_notification"/>
 <div class="mt-5">
     <div class="row">
         @foreach (var item in Model)
@@ -18,10 +19,10 @@
                             <p class="card-title m-0">List Price: <strike><b>@item.ListPrice.ToString("c")</b></strike> </p>
                         </div>
                         <div class="mb-3">
-                            <p class="card-title m-0">Our Price: <b>@item.Price100.ToString("c")</b></p>
+                            <p class="card-title m-0">Priced from: <b>@item.Price100.ToString("c")</b></p>
                         </div>
                    
-                        <a asp-action="details" asp-route-id="@item.Id" class="btn btn-primary px-4">Details</a>
+                        <a asp-action="details" asp-route-productId="@item.Id" class="btn btn-primary px-4">Details</a>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,9 @@
 ﻿using BookShop.Data.Repository.IRepository;
 using BookShop.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace BookShop.Areas.Customers.Controllers
 {
@@ -37,19 +39,51 @@ namespace BookShop.Areas.Customers.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(int productId)
         {
 
-            ShoppingCart cartObj = new ShoppingCart
+            Cart cartObj = new Cart
             {
                 Count = 1,
-                Product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id, "Category,CoverType"),
+                ProductId = productId,
+                Product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == productId, "Category,CoverType"),
                
             };
          
            
 
             return View(cartObj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public IActionResult Details(Cart cart)
+        {
+
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claims = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+          // var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            cart.ApplicationUserId = claims.Value;
+
+            Cart cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(c => c.ApplicationUserId == claims.Value && c.ProductId == cart.ProductId);
+
+            if(cartFromDb == null)
+            {
+                _unitOfWork.ShoppingCart.Add(cart);
+
+            }
+            else
+            {
+                _unitOfWork.ShoppingCart.IncrementCount(cartFromDb, cart.Count);
+
+            }
+            _unitOfWork.Save();
+            TempData["success"] = "Item added to cart successfully!";
+    
+          
+
+            return RedirectToAction(nameof(Index));
         }
 
 

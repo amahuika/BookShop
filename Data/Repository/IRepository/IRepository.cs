@@ -9,7 +9,7 @@ namespace BookShop.Data.Repository.IRepository
         // only common methods this is a generic repository 
         // Category
         T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null);
-        IEnumerable<T> GetAll(string? includeProperties = null);
+        IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null);
 
         void Add(T entity);
 
