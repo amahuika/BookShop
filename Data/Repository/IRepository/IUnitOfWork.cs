@@ -9,7 +9,10 @@
         ICompanyRepository Company { get; }
 
         IApplicationUserRepository ApplicationUser { get; }
-        IShoppingCart ShoppingCart { get; }
+        IShoppingCartRepository ShoppingCart { get; }
+        IOrderDetailsRepository OrderDetails { get; }
+        IOrderHeaderRepository OrderHeader { get; }
+
 
 
 

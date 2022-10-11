@@ -3,7 +3,7 @@ using BookShop.Models;
 
 namespace BookShop.Data.Repository
 {
-    public class ShoppingCartRepository : Repository<Cart> , IShoppingCart
+    public class ShoppingCartRepository : Repository<Cart> , IShoppingCartRepository
     {
 
         private ApplicationDbContext _db;

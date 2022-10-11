@@ -17,7 +17,7 @@ namespace BookShop.Data.Repository
      
         public void Update(Product obj)
         {
-            var objFromDb = _db.Product.FirstOrDefault(x => x.Id == obj.Id);
+            var objFromDb = _db.Product?.FirstOrDefault(x => x.Id == obj.Id);
             if (objFromDb != null)
             {
                 objFromDb.ISBN = obj.ISBN;

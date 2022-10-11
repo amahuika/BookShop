@@ -2,7 +2,7 @@
 
 namespace BookShop.Data.Repository.IRepository
 {
-    public interface IShoppingCart : IRepository<Cart>
+    public interface IShoppingCartRepository : IRepository<Cart>
     {
 
       int IncrementCount(Cart cart, int count);

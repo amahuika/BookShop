@@ -17,7 +17,7 @@ namespace BookShop.Data.Repository
 
         public void Update(Category obj)
         {
-            _db?.Category.Update(obj);
+            _db?.Category?.Update(obj);
         }
     }
 }

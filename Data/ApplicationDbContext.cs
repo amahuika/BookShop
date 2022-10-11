@@ -20,6 +20,10 @@ namespace BookShop.Data
         public DbSet<BookShop.Models.Cart>? Cart { get; set; }
         public DbSet<BookShop.Models.Cart>? ShoppingCart { get; set; }
 
+        public DbSet<OrderHeader>? OrderHeaders { get; set; }
+        public DbSet<OrderDetails>? OrderDetails { get; set; }
+
+
 
 
 

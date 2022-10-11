@@ -17,7 +17,7 @@ namespace BookShop.Data.Repository
 
         public void Update(CoverType obj)
         {
-            _db?.CoverType.Update(obj);
+            _db?.CoverType?.Update(obj);
         }
     }
 }

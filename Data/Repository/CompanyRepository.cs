@@ -17,7 +17,7 @@ namespace BookShop.Data.Repository
 
         public void Update(Company obj)
         {
-            _db?.Company.Update(obj);
+            _db?.Company?.Update(obj);
         }
 
 
