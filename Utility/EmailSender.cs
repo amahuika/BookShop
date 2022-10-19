@@ -17,10 +17,11 @@ namespace BookShop.Utility
             emailToSend.Subject = subject;
             emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html){ Text = htmlMessage};
 
-            // send email
+            // send email MailKit.Security.SecureSocketOptions.StartTls
             // using statements calls the dispose method when it goes out of scope
             using (var emailClient = new SmtpClient())
             {
+                
                 emailClient.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
                 emailClient.Authenticate("bboyakorn@gmail.com", "awnlmdmyyjrycbnc");
                 emailClient.Send(emailToSend);

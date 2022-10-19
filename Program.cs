@@ -1,4 +1,5 @@
 using BookShop.Data;
+using BookShop.Data.DbInitializer;
 using BookShop.Data.Repository;
 using BookShop.Data.Repository.IRepository;
 using BookShop.Utility;
@@ -19,6 +20,8 @@ builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Str
 
 // Add unitOfWork
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 builder.Services.AddRazorPages();
@@ -77,6 +80,8 @@ app.UseAuthorization();
 
 app.UseSession();
 
+SeedDatabase();
+
 /*app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
@@ -94,3 +99,12 @@ app.MapControllerRoute(
 
 
 app.Run();
+
+void SeedDatabase()
+{
+    using (var scope = app.Services.CreateScope()) {
+
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        dbInitializer.Initialize();
+    }
+}

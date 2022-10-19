@@ -225,10 +225,13 @@ namespace BookShop.Areas.Customers.Controllers
 
             }
 
-            _emailSender.SendEmailAsync(orderHeader.ApplicationUser.Email, "New Order - Book Shop", "<p>New order created</p>");
+            //email
+          /*  _emailSender.SendEmailAsync(orderHeader.ApplicationUser.Email, "New Order - Book Shop", "<p>New order created</p>");*/
             // get shopping cart from db
             List<Cart> shoppingCart = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
             // empty the shopping cart
+
+            HttpContext.Session.Clear();
             _unitOfWork.ShoppingCart.RemoveRange(shoppingCart);
             _unitOfWork.Save();
 
