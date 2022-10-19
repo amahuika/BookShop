@@ -28,6 +28,13 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProvid
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAuthentication().AddFacebook(options =>
+{
+    options.AppId = "2995651403914046";
+    options.AppSecret = "ff82f5d549df290c76615e2d73a1b05d";
+});
+
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = $"/Identity/Account/Login";
