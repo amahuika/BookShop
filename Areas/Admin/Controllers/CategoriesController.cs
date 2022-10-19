@@ -8,10 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using BookShop.Data;
 using BookShop.Models;
 using BookShop.Data.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
+using BookShop.Utility;
 
 namespace BookShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = StaticDetails.Role_Admin)]
     public class CategoriesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

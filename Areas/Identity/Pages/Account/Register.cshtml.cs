@@ -232,6 +232,22 @@ namespace BookShop.Areas.Identity.Pages.Account
                 }
             }
 
+            Input = new InputModel()
+            {
+                // selecting the name then projecting to a selectlistitem for drop down
+                RoleList = _roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem
+                {
+                    Text = i,
+                    Value = i
+                }),
+
+                CompanyList = _unitOfWork.Company.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                })
+
+            };
             // If we got this far, something failed, redisplay form
             return Page();
         }

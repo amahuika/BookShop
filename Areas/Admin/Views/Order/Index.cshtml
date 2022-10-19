@@ -1,0 +1,90 @@
+﻿@{ 
+    // get status 
+    var status = Context.Request.Query["status"];
+
+    var pending = "text-primary";
+    var inProcess = "text-primary";
+    var completed = "text-primary";
+    var approved = "text-primary";
+
+    var All = "text-primary";
+
+
+
+    switch (status)
+    {
+        case "pending":
+            pending = "active text-white";
+            break;
+        case "inprocess":
+            inProcess = "active text-white";
+            break;
+        case "completed":
+            completed = "active text-white";
+            break;
+        case "approved":
+            approved = "active text-white";
+            break;
+        default:
+            All = "active text-white";
+            break;
+    }
+    }
+
+<div class="d-flex justify-content-between">
+    <div>
+    <h1>Order List</h1>
+        </div>
+    <div>
+        <ul class="list-group list-group-horizontal-sm">
+            <a class="text-decoration-none" asp-controller="Order" asp-action="Index" asp-route-status="inprocess">
+            <li class="list-group-item @inProcess">In Process</li>
+            </a>
+            <a class="text-decoration-none" asp-controller="Order" asp-action="Index" asp-route-status="pending">
+            <li class="list-group-item @pending">Pending</li>
+            </a>
+            <a class="text-decoration-none" asp-controller="Order" asp-action="Index" asp-route-status="completed">
+            <li class="list-group-item @completed">Completed</li>
+            </a>
+            <a class="text-decoration-none" asp-controller="Order" asp-action="Index" asp-route-status="approved">
+            <li class="list-group-item @approved">Approved</li>
+            </a>
+            <a class="text-decoration-none" asp-controller="Order" asp-action="Index" asp-route-status="all">
+            <li class="list-group-item @All">All</li>
+            </a>
+        </ul>
+    </div>
+
+
+</div>
+<table class="table table-bordered table-striped" id="dataTable">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Phone Number
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Total
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+
+</table>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script src="~/js/orders.js"></script>

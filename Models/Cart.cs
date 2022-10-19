@@ -7,7 +7,7 @@ namespace BookShop.Models
     public class Cart
     {
         public int Id { get; set; }
-        public int? ProductId { get; set; }
+        public int ProductId { get; set; }
 
         [ForeignKey("ProductId")]
         [ValidateNever]

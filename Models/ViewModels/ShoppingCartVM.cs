@@ -7,5 +7,7 @@
 
         public double TotalPrice { get; set; }
 
+        public OrderHeader OrderHeader { get; set; }
+
     }
 }

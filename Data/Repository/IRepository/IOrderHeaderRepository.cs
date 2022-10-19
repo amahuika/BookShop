@@ -10,8 +10,10 @@ namespace BookShop.Data.Repository.IRepository
         void UpdateStatus(int id, string orderStatus, string? paymentStatus = null);
 
 
+        void UpdatePaymentId(int id, string sessionId, string paymentIntentId);
 
-     
+
+
 
 
     }

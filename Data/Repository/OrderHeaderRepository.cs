@@ -33,5 +33,15 @@ namespace BookShop.Data.Repository
                 }
             }
         }
+
+        public void UpdatePaymentId(int id, string sessionId, string paymentIntentId)
+        {
+            var orderFromDb = _db.OrderHeaders?.FirstOrDefault(x => x.Id == id);
+
+            orderFromDb.PaymentDate = DateTime.Now;
+            orderFromDb.PaymentIntentId = paymentIntentId;
+            orderFromDb.SessionId = sessionId;
+        
+        }
     }
 }

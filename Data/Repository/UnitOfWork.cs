@@ -31,6 +31,8 @@ namespace BookShop.Data.Repository
             ShoppingCart = new ShoppingCartRepository(_db);
             OrderHeader = new OrderHeaderRepository(_db);
             OrderDetails = new OrderDetailsRepository(_db);
+            ApplicationUser = new ApplicationUserRepository(_db);
+
 
 
 
