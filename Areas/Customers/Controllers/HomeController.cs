@@ -1,5 +1,6 @@
 ﻿using BookShop.Data.Repository.IRepository;
 using BookShop.Models;
+using BookShop.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -71,14 +72,19 @@ namespace BookShop.Areas.Customers.Controllers
             if(cartFromDb == null)
             {
                 _unitOfWork.ShoppingCart.Add(cart);
+                _unitOfWork.Save();
+
+                HttpContext.Session.SetInt32(StaticDetails.SessionCart, _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claims.Value).ToList().Count);
+
 
             }
             else
             {
                 _unitOfWork.ShoppingCart.IncrementCount(cartFromDb, cart.Count);
+                _unitOfWork.Save();
 
             }
-            _unitOfWork.Save();
+
             TempData["success"] = "Item added to cart successfully!";
     
           
