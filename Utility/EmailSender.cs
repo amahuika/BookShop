@@ -12,8 +12,8 @@ namespace BookShop.Utility
             var emailToSend = new MimeMessage();
 
             // configure email
-            emailToSend.From.Add(MailboxAddress.Parse("bboyakorn@gmail.com"));
-            emailToSend.To.Add(MailboxAddress.Parse("amahuika@hotmail.com"));
+            emailToSend.From.Add(MailboxAddress.Parse("YourEmailHere@gmail.com"));
+            emailToSend.To.Add(MailboxAddress.Parse(email));
             emailToSend.Subject = subject;
             emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html){ Text = htmlMessage};
 
@@ -23,7 +23,7 @@ namespace BookShop.Utility
             {
                 
                 emailClient.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                emailClient.Authenticate("bboyakorn@gmail.com", "awnlmdmyyjrycbnc");
+                emailClient.Authenticate("yourEmailHere@gmail.com", "YourPasswordHere");
                 emailClient.Send(emailToSend);
                 emailClient.Disconnect(true);
             }
