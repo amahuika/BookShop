@@ -1,4 +1,3 @@
-
 # Book Store Ecommerce Store
 
 Made with C# asp.net MVC
@@ -22,5 +21,3 @@ Email functioinality has been commented out.
 ## Authors
 
 - Aron Mahuika [@amahuika](https://github.com/amahuika)
-
-
