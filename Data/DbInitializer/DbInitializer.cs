@@ -61,13 +61,13 @@ namespace BookShop.Data.DbInitializer
                 _userManager.CreateAsync(new ApplicationUser
                 {
                     UserName = "admin@gmail.com",
-                    Email = "admin@gmail.com",
+                    Email = "admin@mail.com",
                     Name = "Admin",
                     PhoneNumber = "022333444555",
                     StreetAddress = "123 test Street",
                     PostalCode = "12345",
                     City = "Night City"
-                }, "Admin1234!").GetAwaiter().GetResult();
+                }, "Asdf1234!").GetAwaiter().GetResult();
 
                 ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@gmail.com");
 
