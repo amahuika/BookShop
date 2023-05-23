@@ -53,13 +53,13 @@
 
                             </li>
                         }
-
+                        @if (User.Identity.IsAuthenticated) {
                         <li>
                             <a class="nav-link text-dark" asp-area="Admin" asp-controller="Order" asp-action="Index">Manage Order</a>
                         </li>
+                        }
 
 
-                   
                         <li>
                             
                             <a class="nav-link text-dark" asp-area="Customers" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart"></i> Cart @await Component.InvokeAsync("ShoppingCart") </a>
@@ -82,7 +82,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - BookShop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; Made by <a href="https://github.com/amahuika/"> Aron Mahuika <i class="bi bi-github"></i></a>  - BookShop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

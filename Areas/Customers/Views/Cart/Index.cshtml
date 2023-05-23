@@ -37,13 +37,15 @@
 
                             <div class=" btn-group" role="group">
 
-                                <a asp-action="Plus" asp-route-cartId="@item.Id" class="btn btn-primary rounded">
-                                    <i class="bi bi-plus-square"></i>
-                                </a> &nbsp;&nbsp;
                                 <a asp-action="Minus" asp-route-cartId="@item.Id" class="btn btn-warning rounded">
                                     <i class="bi bi-dash-square"></i>
                                 </a>
-                          
+
+                                &nbsp;&nbsp;
+                                <a asp-action="Plus" asp-route-cartId="@item.Id" class="btn btn-primary rounded">
+                                    <i class="bi bi-plus-square"></i>
+                                </a> 
+
                             </div>
 
                         </div>

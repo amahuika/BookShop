@@ -3,12 +3,14 @@
 
 <div class="mt-5">
     <div class="row">
-        @foreach (var item in Model)
-        {
+        <p>This is a test website for a ASP.NET MVC project.</p>
+        <p>Feel free to login as a admin to view admin functionallity or register, add items to cart and checkout</p>
+
+        @foreach (var item in Model) {
 
             <div class="col-lg-3 col-4 col-md-4 mb-5">
                 <div>
-                   
+
                     <img src="@item.ImageUrl" class="card-img-top" alt="...">
                     <div class="card-body ps-1 mt-2">
                         <div class="">
@@ -21,7 +23,7 @@
                         <div class="mb-3">
                             <p class="card-title m-0">Priced from: <b>@item.Price100.ToString("c")</b></p>
                         </div>
-                   
+
                         <a asp-action="details" asp-route-productId="@item.Id" class="btn btn-primary px-4">Details</a>
                     </div>
                 </div>

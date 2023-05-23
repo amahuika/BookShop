@@ -3,7 +3,6 @@ using BookShop.Models;
 using BookShop.Models.ViewModels;
 using BookShop.Utility;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
@@ -19,7 +18,7 @@ namespace BookShop.Areas.Customers.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmailSender _emailSender;
 
-     
+
         [BindProperty]
         public ShoppingCartVM shoppingCartVM { get; set; }
         public CartController(IUnitOfWork unitOfWork, IEmailSender emailSender)
@@ -53,17 +52,17 @@ namespace BookShop.Areas.Customers.Controllers
 
         public IActionResult Summary()
         {
-          
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             shoppingCartVM = new ShoppingCartVM()
             {
                 CartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, "Product"),
                 OrderHeader = new(),
-                
-                
+
+
             };
-            
+
             // populate shoppingCartVM based on user ID
             shoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == userId);
 
@@ -81,7 +80,7 @@ namespace BookShop.Areas.Customers.Controllers
             }
 
             return View(shoppingCartVM);
-         
+
 
         }
 
@@ -98,8 +97,8 @@ namespace BookShop.Areas.Customers.Controllers
 
             // get cart list from DB
             shoppingCartVM.CartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, "Product");
-       
-     
+
+
             shoppingCartVM.OrderHeader.OrderDate = System.DateTime.Now;
             shoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
@@ -109,9 +108,9 @@ namespace BookShop.Areas.Customers.Controllers
                 item.Price = GetPriceBasedOnQuantity(item.Count, item.Product.Price, item.Product.Price50, item.Product.Price100);
                 shoppingCartVM.OrderHeader.OrderTotal += (item.Price * item.Count);
 
-               
 
-                if (applicationUser.CompanyId.GetValueOrDefault() == 0) 
+
+                if (applicationUser.CompanyId.GetValueOrDefault() == 0)
                 {
                     shoppingCartVM.OrderHeader.PaymentStatus = StaticDetails.PaymentStatusPending;
                     shoppingCartVM.OrderHeader.OrderStatus = StaticDetails.StatusPending;
@@ -133,13 +132,13 @@ namespace BookShop.Areas.Customers.Controllers
             // add order details to database iterate over each order
             foreach (var item in shoppingCartVM.CartList)
             {
-               OrderDetails orderDetails = new OrderDetails()
-               {
-                   ProductId = (int)item.ProductId,
-                   OrderId = shoppingCartVM.OrderHeader.Id,
-                   Price = item.Price,
-                   Count = item.Count,
-               };
+                OrderDetails orderDetails = new OrderDetails()
+                {
+                    ProductId = (int)item.ProductId,
+                    OrderId = shoppingCartVM.OrderHeader.Id,
+                    Price = item.Price,
+                    Count = item.Count,
+                };
                 _unitOfWork.OrderDetails.Add(orderDetails);
                 _unitOfWork.Save();
             }
@@ -151,7 +150,7 @@ namespace BookShop.Areas.Customers.Controllers
             {
 
                 // Stripe Settings
-                var domain = "https://localhost:44333/";
+                var domain = "https://bookshoptest.azurewebsites.net/";
                 var options = new SessionCreateOptions
                 {
 
@@ -159,6 +158,7 @@ namespace BookShop.Areas.Customers.Controllers
                     Mode = "payment",
                     SuccessUrl = domain + $"customers/cart/OrderConfirmation?id={shoppingCartVM.OrderHeader.Id}",
                     CancelUrl = domain + $"customers/cart/Index",
+
                 };
 
                 foreach (var item in shoppingCartVM.CartList)
@@ -191,14 +191,15 @@ namespace BookShop.Areas.Customers.Controllers
                 Response.Headers.Add("Location", session.Url);
                 return new StatusCodeResult(303);
 
-            } else
+            }
+            else
             {
-                return RedirectToAction("OrderConfirmation", "Cart", new {id=shoppingCartVM.OrderHeader.Id});
+                return RedirectToAction("OrderConfirmation", "Cart", new { id = shoppingCartVM.OrderHeader.Id });
             }
             // empty the shopping cart
-          /*  _unitOfWork.ShoppingCart.RemoveRange(shoppingCartVM.CartList);
-            _unitOfWork.Save();
-            return RedirectToAction("Index", "Home");*/
+            /*  _unitOfWork.ShoppingCart.RemoveRange(shoppingCartVM.CartList);
+              _unitOfWork.Save();
+              return RedirectToAction("Index", "Home");*/
 
 
         }
@@ -220,13 +221,13 @@ namespace BookShop.Areas.Customers.Controllers
                     _unitOfWork.OrderHeader.UpdateStatus(id, StaticDetails.StatusApproved, StaticDetails.PaymentStatusApproved);
                     _unitOfWork.Save();
                 }
-           
+
 
 
             }
 
             //email
-          /*  _emailSender.SendEmailAsync(orderHeader.ApplicationUser.Email, "New Order - Book Shop", "<p>New order created</p>");*/
+            /*  _emailSender.SendEmailAsync(orderHeader.ApplicationUser.Email, "New Order - Book Shop", "<p>New order created</p>");*/
             // get shopping cart from db
             List<Cart> shoppingCart = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
             // empty the shopping cart
@@ -239,25 +240,25 @@ namespace BookShop.Areas.Customers.Controllers
         }
 
 
-        public IActionResult Plus(int cartId) 
+        public IActionResult Plus(int cartId)
         {
-             var cart = _unitOfWork.ShoppingCart.GetFirstOrDefault(i => i.Id == cartId);
+            var cart = _unitOfWork.ShoppingCart.GetFirstOrDefault(i => i.Id == cartId);
             _unitOfWork.ShoppingCart.IncrementCount(cart, 1);
             _unitOfWork.Save();
-            
+
 
             return RedirectToAction(nameof(Index));
 
-       
+
         }
 
         public IActionResult Minus(int cartId)
         {
             var cart = _unitOfWork.ShoppingCart.GetFirstOrDefault(i => i.Id == cartId);
-            if(cart.Count <= 1)
+            if (cart.Count <= 1)
             {
                 _unitOfWork.ShoppingCart.Remove(cart);
-                var count = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count-1;
+                var count = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count - 1;
                 HttpContext.Session.SetInt32(StaticDetails.SessionCart, count);
             }
             else
@@ -284,14 +285,15 @@ namespace BookShop.Areas.Customers.Controllers
 
         }
 
-        public double GetPriceBasedOnQuantity(double quantity, double price, double price50, double price100) 
+        public double GetPriceBasedOnQuantity(double quantity, double price, double price50, double price100)
         {
-        if(quantity <= 50) 
+            if (quantity <= 50)
             {
                 return price;
-            } else
+            }
+            else
             {
-                if(quantity <= 99)
+                if (quantity <= 99)
                 {
                     return price50;
                 }
