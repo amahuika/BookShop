@@ -55,8 +55,8 @@ namespace BookShop.Areas.Admin.Controllers
 
             OrderVM.OrderDetails = _unitOfWork.OrderDetails.GetAll(u => u.Id == OrderVM.OrderHeader.Id, "Product");
 
-            // strip settings
-            var domain = "https://localhost:44333/";
+            // stripe settings
+            var domain = "https://bookshop.aronmahuika.com/";
             var options = new SessionCreateOptions
             {
 

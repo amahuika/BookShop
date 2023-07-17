@@ -150,7 +150,7 @@ namespace BookShop.Areas.Customers.Controllers
             {
 
                 // Stripe Settings
-                var domain = "https://bookshoptest.azurewebsites.net/";
+                var domain = "https://bookshop.aronmahuika.com/";
                 var options = new SessionCreateOptions
                 {
 
