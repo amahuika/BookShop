@@ -16,3 +16,5 @@ https://bookshop.aronmahuika.com
 
 - Aron Mahuika [@amahuika](https://github.com/amahuika)
 
+- https://aronmahuika.com
+
