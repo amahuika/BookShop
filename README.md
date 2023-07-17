@@ -7,9 +7,7 @@ Made with C#, .Net Core, ASP.NET, MVC
 
 ## Live Preview
 The admin login details are on the login page
-
-
-[https://bookshoptest.azurewebsites.net/](https://bookshop.aronmahuika.com/)
+https://bookshop.aronmahuika.com
 
 
 
