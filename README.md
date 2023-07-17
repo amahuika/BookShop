@@ -6,7 +6,8 @@ Made with C#, .Net Core, ASP.NET, MVC
 
 
 ## Live Preview
-The admin login details are on the login page
+Admin login details are on the login page to view functionality
+
 https://bookshop.aronmahuika.com
 
 
